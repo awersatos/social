@@ -10,12 +10,12 @@ $config = [
     'controllerNamespace' => 'app\commands',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
         '@tests' => '@app/tests',
     ],
     'components' => [
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\redis\Cache',
         ],
         'log' => [
             'targets' => [
@@ -26,7 +26,15 @@ $config = [
             ],
         ],
         'db' => $db,
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => 'localhost',
+            'port' => 6379,
+            'database' => 0,
+        ],
     ],
+
+
     'params' => $params,
     /*
     'controllerMap' => [
