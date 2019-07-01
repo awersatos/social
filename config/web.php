@@ -6,7 +6,10 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'queue'
+    ],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -54,14 +57,25 @@ $config = [
         'session' => [
             'class' => 'yii\redis\Session',
         ],
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+
+        'queue' => [
+            'class' => \yii\queue\amqp_interop\Queue::class,
+            'port' => 5672,
+            'user' => 'guest',
+            'password' => 'guest',
+            'queueName' => 'queue',
+            'driver' => yii\queue\amqp_interop\Queue::ENQUEUE_AMQP_LIB,
+            'dsn' => 'amqp://guest:guest@localhost:5672/%2F',
+           // 'dsn' => 'amqp:',
+        ],
+
     ],
     'params' => $params,
 ];

@@ -6,7 +6,10 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic-console',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'queue'
+        ],
     'controllerNamespace' => 'app\commands',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -32,6 +35,15 @@ $config = [
             'port' => 6379,
             'database' => 0,
         ],
+        'queue' => [
+            'class' => \yii\queue\amqp_interop\Queue::class,
+            'port' => 5672,
+            'user' => 'guest',
+            'password' => 'guest',
+            'queueName' => 'queue',
+            'driver' => yii\queue\amqp_interop\Queue::ENQUEUE_AMQP_LIB,
+            'dsn' => 'amqp://guest:guest@localhost:5672/%2F',
+            ],
     ],
 
 
