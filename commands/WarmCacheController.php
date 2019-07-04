@@ -35,7 +35,7 @@ class WarmCacheController extends Controller
 
             $id = $user['id'];
             $posts = (new Query())
-                ->select(['id', 'timestamp', 'message'])
+                ->select([])
                 ->from('post')
                 ->where(['user_id' => $id])
                 ->limit($pageLimit)

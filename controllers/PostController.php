@@ -12,9 +12,6 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use app\jobs\CreateListJob;
-use app\models\User;
-use yii\web\Response;
-use yii\filters\VerbFilter;
 
 class PostController extends Controller
 {
