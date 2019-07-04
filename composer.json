@@ -21,7 +21,8 @@
         "yiisoft/yii2-redis": "^2.0",
         "yiisoft/yii2-queue": "^2.3",
         "enqueue/fs": "^0.9.12",
-        "enqueue/amqp-lib": "^0.9.12"
+        "enqueue/amqp-lib": "^0.9.12",
+        "nirvana-msu/yii2-infinite-scroll": "1.0.*@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

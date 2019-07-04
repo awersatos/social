@@ -62,7 +62,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        //$dataProvider = new  ArrayDataProvider([]);
+        return $this->render('index'/*,['dataProvider'=> $dataProvider]*/);
     }
 
     /**
