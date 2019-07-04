@@ -50,6 +50,6 @@ class PostController extends Controller
             }
 
         }
-        return $this->asJson($page ? ['posts' => $page] : ['error' => 'not_page']);
+        return $this->asJson($page ? ['posts' => $page, 'success' => true] : ['error' => 'not_page']);
     }
 }

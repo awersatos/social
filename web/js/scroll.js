@@ -38,7 +38,7 @@ function loadData() {
 
         var url = $loadManager.data('url') + '?last=' + $loadManager.data('last');
 
-       // $loadManager.data('offset', offset + limit); // сразу выставляем новое смещение для следующего запроса
+
         sendAjax(url); // передаём необходимые данные функции отправки запроса
 
     }, 30);
@@ -50,13 +50,13 @@ function sendAjax(url) {
     $.ajax({ //  сам запрос
         type: 'GET',
         url: url,
-        dataType: "json" // предполоижтельный формат ответа сервера
+        dataType: "json"
     }).done(function (res) { // если успешно
-        // hideLoaderIdenity(); // скрываем идентификатор загрузки
-
-        appendHtml(res.posts) // добавляем скаченные данные в конец ленты
-
-        if (res.finished) { // если получили признак завершения прокрутки
+        if (res.posts && (res.posts.length !== 0)) {
+            appendHtml(res.posts)
+            var last = res.posts[res.posts.length - 1].id;
+            $loadManager.data('last', last);
+        } else  {
             stopLoadTrying();
         }
 
@@ -68,7 +68,6 @@ function sendAjax(url) {
 
         } else { // если не нравится результат
             console.log('Пришли не те данные!');
-            alert(res.message);
         }
     }).fail(function () { // если ошибка передачи
         //hideLoaderIdenity();
@@ -77,16 +76,10 @@ function sendAjax(url) {
     });
 }
 
-/**
- * Добавим подгруженные данные в ленту
- *
- * @param {type} html
- * @returns {undefined}
- */
 function appendHtml(posts) {
 
-    for(var i=0; i< posts.length; i++){
-        var html = '<div class="post">' + posts[i].user + posts[i].message + '</div>';
+    for (var i = 0; i < posts.length; i++) {
+        var html = '<div class="post"><span>' + posts[i].user + '</span>' + posts[i].message + '</div>';
         $(projectsContainerId).append(html);
     }
 
