@@ -35,16 +35,16 @@ class PostController extends Controller
         $last = (int)Yii::$app->request->get('last') ?? 0;
         $cache = \Yii::$app->cache;
         $page = $cache->get("page-$id-$last");
-        if($page === false){
+        if ($page === false) {
             Yii::$app->queue->push(new CreateListJob([
                 'id' => $id,
                 'last' => $last,
             ]));
 
-            for($i=0; $i < 250; $i++){
-                usleep(100);
+            for ($i = 0; $i < 25; $i++) {
+                sleep(1);
                 $page = $cache->get("page-$id-$last");
-                if($page !== false){
+                if ($page !== false) {
                     break;
                 }
             }
