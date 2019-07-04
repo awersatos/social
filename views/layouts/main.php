@@ -41,6 +41,14 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
+            [
+                'label' => 'Dropdown',
+                'items' => [
+                    ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
+                    '<li class="divider"></li>',
+                    ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
+                ],
+            ],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -54,6 +62,7 @@ AppAsset::register($this);
                 . '</li>'
             )
         ],
+
     ]);
     NavBar::end();
     ?>

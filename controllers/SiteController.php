@@ -20,10 +20,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout'],
+                'only' => ['logout', 'index'],
                 'rules' => [
                     [
-                       'actions' => ['logout', 'about'],
+                       'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
 
@@ -128,13 +128,5 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionList()
-    {
-        return $this->render('list');
-    }
+
 }
