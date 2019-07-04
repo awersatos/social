@@ -41,8 +41,8 @@ class PostController extends Controller
                 'last' => $last,
             ]));
 
-            for ($i = 0; $i < 25; $i++) {
-                sleep(1);
+            for ($i = 0; $i < 2500; $i++) {
+                usleep(10000);
                 $page = $cache->get("page-$id-$last");
                 if ($page !== false) {
                     break;
@@ -50,6 +50,6 @@ class PostController extends Controller
             }
 
         }
-        return $this->asJson($page ? $page : ['error' => 'not_page']);
+        return $this->asJson($page ? ['posts' => $page] : ['error' => 'not_page']);
     }
 }
