@@ -23,11 +23,11 @@ class PostController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['my_posts', 'index'],
+                'only' => ['my_posts', 'index', 'create'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'my_posts'],
+                        'actions' => ['index', 'my_posts', 'create'],
                         'roles' => ['@']
                     ]
                 ]
@@ -59,18 +59,20 @@ class PostController extends Controller
         return $this->asJson($page ? ['posts' => $page, 'success' => true] : ['error' => 'not_page']);
     }
 
-    public function actionMyPosts(){
+    public function actionMyPosts()
+    {
         $posts = (new Query())
-                ->select([])
-                ->from('post')
-                ->where(['user_id' => Yii::$app->user->id])
-                ->all();
+            ->select([])
+            ->from('post')
+            ->where(['user_id' => Yii::$app->user->id])
+            ->all();
 
         return $this->render('my_posts', ['posts' => $posts]);
     }
 
-    public function actionDelete(){
-        $id =  (int)Yii::$app->request->get('id');
+    public function actionDelete()
+    {
+        $id = (int)Yii::$app->request->get('id');
         $post = Post::findOne(['id' => $id, 'user_id' => Yii::$app->user->id]);
         $post->delete();
         $this->updateCache(Yii::$app->user->id);
@@ -79,9 +81,10 @@ class PostController extends Controller
         return $this->redirect('/post/my-posts');
     }
 
-    private function updateCache($usrId){
+    private function updateCache($usrId)
+    {
         $user = User::findOne($usrId);
-        if($user->followers >= Yii::$app->params['followersThreshold']){
+        if ($user->followers >= Yii::$app->params['followersThreshold']) {
             $posts = (new Query())
                 ->select([])
                 ->from('post')
@@ -90,5 +93,10 @@ class PostController extends Controller
             $cache = \Yii::$app->cache;
             $cache->set("posts-$usrId", $posts);
         }
+    }
+
+    public function actionCreate()
+    {
+        return $this->render('create');
     }
 }
