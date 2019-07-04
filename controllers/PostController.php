@@ -16,8 +16,21 @@ use yii\filters\VerbFilter;
 
 class PostController extends Controller
 {
-    public function actionIndex()
+   public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    ['allow' => true,
+                    'actions' => ['index'],
+                    'roles' => ['@'] ]
+                ]
+            ]
+        ];
+    }
 
+    public function actionIndex()
     {
         return $this->render('post');
     }
