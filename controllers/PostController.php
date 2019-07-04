@@ -13,6 +13,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use app\jobs\CreateListJob;
 use app\models\Post;
+use app\models\PostForm;
 use app\models\User;
 use \yii\db\Query;
 
@@ -97,6 +98,12 @@ class PostController extends Controller
 
     public function actionCreate()
     {
-        return $this->render('create');
+        $model = new PostForm();
+        if($model->load(Yii::$app->request->post())){
+            $model->create();
+            $this->updateCache(Yii::$app->user->id);
+            return $this->redirect('/post/my-posts');
+        }
+        return $this->render('create', ['model' => $model]);
     }
 }
