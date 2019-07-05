@@ -66,6 +66,7 @@ class PostController extends Controller
             ->select([])
             ->from('post')
             ->where(['user_id' => Yii::$app->user->id])
+            ->orderBy('id DESC')
             ->all();
 
         return $this->render('my_posts', ['posts' => $posts]);
@@ -90,6 +91,8 @@ class PostController extends Controller
                 ->select([])
                 ->from('post')
                 ->where(['user_id' => Yii::$app->user->id])
+                ->orderBy('id DESC')
+                ->limit(20)
                 ->all();
             $cache = \Yii::$app->cache;
             $cache->set("posts-$usrId", $posts);
