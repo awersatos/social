@@ -15,12 +15,16 @@ class m190629_112312_create_post_table extends Migration
      */
     public function safeUp()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        }
         $this->createTable('{{%post}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
             'timestamp' => $this->integer()->notNull(),
             'message' => $this->string(250),
-        ]);
+        ], $tableOptions);
 
         // creates index for column `user_id`
         $this->createIndex(
