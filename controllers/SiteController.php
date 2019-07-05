@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
 use \yii\db\Query;
 
 class SiteController extends Controller
@@ -24,7 +25,7 @@ class SiteController extends Controller
                 'only' => ['logout', 'index'],
                 'rules' => [
                     [
-                       'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
 
@@ -134,7 +135,7 @@ class SiteController extends Controller
         $followers = (new Query())
             ->select(['f.follower_id', 'u.name as user'])
             ->from('following f')
-            ->innerJoin('user u','u.id = f.follower_id')
+            ->innerJoin('user u', 'u.id = f.follower_id')
             ->where(['f.user_id' => Yii::$app->user->id])
             ->all();
         return $this->render('following', ['followers' => $followers]);
@@ -146,11 +147,63 @@ class SiteController extends Controller
         $follows = (new Query())
             ->select(['f.user_id', 'u.name as user'])
             ->from('following f')
-            ->innerJoin('user u','u.id = f.user_id')
+            ->innerJoin('user u', 'u.id = f.user_id')
             ->where(['f.follower_id' => Yii::$app->user->id])
             ->all();
         return $this->render('followed', ['followers' => $follows]);
     }
 
+    public function actionUser()
+    {
+        $user = User::findOne(Yii::$app->request->get('id'));
+        $me = User::findOne(Yii::$app->user->id);
+        $followed = unserialize($me->followed);
+        if(array_search($user->id, $followed) === false){
+            $status = 'u';
+        } else {
+            $status = 'f';
+        }
+
+        $posts = (new Query())
+            ->select(['message'])
+            ->from('post')
+            ->where(['user_id' => $user->id])
+            ->orderBy('id DESC')
+            ->all();
+
+        return $this->render('user', [
+            'user' => $user,
+            'posts' => $posts,
+            'status' => $status
+        ]);
+    }
+
+    public function actionUserFollow(){
+        $user = User::findOne(Yii::$app->request->get('id'));
+        $me = User::findOne(Yii::$app->user->id);
+        $action = Yii::$app->request->get('action');
+        $followed = unserialize($me->followed);
+        if($action == 'f'){
+            Yii::$app->db->createCommand()->insert('following', [
+                'user_id' => $user->id,
+                'follower_id' => $me->id,
+            ])->execute();
+            $followed[] = $user->id;
+            $me->followed = serialize($followed);
+            $me->save();
+            $user->updateCounters(['followers' => 1]);
+        } else {
+            Yii::$app->db->createCommand()->delete('following', [
+                'user_id' => $user->id,
+                'follower_id' => $me->id,
+            ])->execute();
+            $key = array_search($user->id, $followed);
+            unset($followed[$key]);
+            $me->followed = serialize($followed);
+            $me->save();
+            $user->updateCounters(['followers' => -1]);
+        }
+        return $this->redirect('/site/user?id=' . $user->id);
+    }
 
 }

@@ -131,3 +131,8 @@ a.desc:after {
     width: 350px;
     text-align: center;
 }
+.follow-btn{
+    margin: auto;
+    width: 150px;
+    display: block;
+}

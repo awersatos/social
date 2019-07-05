@@ -42,14 +42,7 @@ AppAsset::register($this);
             ['label' => 'My Posts', 'url' => ['/post/my-posts']],
             ['label' => 'My followers', 'url' => ['/site/following']],
             ['label' => 'I followed', 'url' => ['/site/followed']],
-            [
-                'label' => 'Dropdown',
-                'items' => [
-                    ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
-                    '<li class="divider"></li>',
-                    ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
-                ],
-            ],
+
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
