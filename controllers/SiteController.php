@@ -135,9 +135,21 @@ class SiteController extends Controller
             ->select(['f.follower_id', 'u.name as user'])
             ->from('following f')
             ->innerJoin('user u','u.id = f.follower_id')
-            ->where(['user_id' => Yii::$app->user->id])
+            ->where(['f.user_id' => Yii::$app->user->id])
             ->all();
         return $this->render('following', ['followers' => $followers]);
+    }
+
+    public function actionFollowed()
+    {
+
+        $follows = (new Query())
+            ->select(['f.user_id', 'u.name as user'])
+            ->from('following f')
+            ->innerJoin('user u','u.id = f.user_id')
+            ->where(['f.follower_id' => Yii::$app->user->id])
+            ->all();
+        return $this->render('followed', ['followers' => $follows]);
     }
 
 

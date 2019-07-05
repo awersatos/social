@@ -41,6 +41,7 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'My Posts', 'url' => ['/post/my-posts']],
             ['label' => 'My followers', 'url' => ['/site/following']],
+            ['label' => 'I followed', 'url' => ['/site/followed']],
             [
                 'label' => 'Dropdown',
                 'items' => [
