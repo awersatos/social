@@ -24,11 +24,10 @@ class PostController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['my_posts', 'index', 'create'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'my_posts', 'create'],
+                        'actions' => [],
                         'roles' => ['@']
                     ]
                 ]
