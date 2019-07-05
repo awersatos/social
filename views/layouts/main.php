@@ -39,8 +39,8 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'My Posts', 'url' => ['/post/my-posts']],
+            ['label' => 'My followers', 'url' => ['/site/following']],
             [
                 'label' => 'Dropdown',
                 'items' => [

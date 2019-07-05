@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use \yii\db\Query;
 
 class SiteController extends Controller
 {
@@ -126,6 +127,17 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionFollowing()
+    {
+        $followers = (new Query())
+            ->select(['f.follower_id', 'u.name as user'])
+            ->from('following f')
+            ->innerJoin('user u','u.id = f.follower_id')
+            ->where(['user_id' => Yii::$app->user->id])
+            ->all();
+        return $this->render('following', ['followers' => $followers]);
     }
 
 

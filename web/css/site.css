@@ -123,3 +123,11 @@ a.desc:after {
     font-weight: bold;
     margin-right: 50px;
 }
+
+.user-item {
+    padding: 20px;
+    border: solid 1px gray;
+    margin: 10px auto;
+    width: 350px;
+    text-align: center;
+}
