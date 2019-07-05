@@ -38,10 +38,11 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'My Posts', 'url' => ['/post/my-posts']],
-            ['label' => 'My followers', 'url' => ['/site/following']],
-            ['label' => 'I followed', 'url' => ['/site/followed']],
+
+            Yii::$app->user->id ? ['label' => 'Home', 'url' => ['/site/index']] : '',
+            Yii::$app->user->id ? ['label' => 'My Posts', 'url' => ['/post/my-posts']] : '',
+            Yii::$app->user->id ? ['label' => 'My followers', 'url' => ['/site/following']] : '',
+            Yii::$app->user->id ? ['label' => 'I followed', 'url' => ['/site/followed']] : '',
 
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
