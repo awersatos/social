@@ -55,6 +55,9 @@ function sendAjax(url) {
         if (res.posts && (res.posts.length !== 0)) {
             appendHtml(res.posts)
             var last = res.posts[res.posts.length - 1].id;
+            if($loadManager.data('last') === 0){
+                $('#total').text(res.total);
+            }
             $loadManager.data('last', last);
         } else  {
             stopLoadTrying();

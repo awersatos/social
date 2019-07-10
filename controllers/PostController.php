@@ -56,7 +56,9 @@ class PostController extends Controller
             }
 
         }
-        return $this->asJson($page ? ['posts' => $page, 'success' => true] : ['error' => 'not_page']);
+        $total = $cache->get("total-$id") ? $cache->get("total-$id") : 0 ;
+
+        return $this->asJson($page ? ['posts' => $page, 'success' => true, 'total' => $total] : ['error' => 'not_page']);
     }
 
     public function actionMyPosts()

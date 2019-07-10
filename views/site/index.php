@@ -8,6 +8,7 @@ $this->title = 'Social';
 
 <div class="site-index">
 <h1>Posts list</h1>
+    <h2>Total: <span id="total"></span></h2>
     <div id="posts"></div>
 </div>
 <div style="display: none"

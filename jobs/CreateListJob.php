@@ -27,6 +27,14 @@ class CreateListJob extends BaseObject implements JobInterface
         if (is_array($followed) && (count($followed) != 0)) {
             $result = [];
             $postIdx = [];
+            if($this->last == 0){
+                $total = (new Query())
+                    ->from('post p')
+                    ->innerJoin('user u', 'u.id = p.user_id')
+                    ->where(['in', 'p.user_id', $followed])
+                    ->count();
+                $cache->set("total-$this->id", $total, 45);
+            }
             foreach ($followed as $userId) {
                 $posts = $cache->get("posts-$userId");
                 if ($posts !== false) {
@@ -58,6 +66,7 @@ class CreateListJob extends BaseObject implements JobInterface
             usort($result, [$this, 'cmp_function_desc']);
             $result = array_slice($result, 0, 20);
             $cache->set("page-$this->id-$this->last", $result, 30);
+
         }
     }
 

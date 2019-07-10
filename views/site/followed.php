@@ -1,4 +1,5 @@
 <h1>My follows</h1>
+<h2>Total: <?php echo count($followers); ?></h2>
 <div id="followers">
     <?php
     foreach ($followers as $follower) {
