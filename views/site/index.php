@@ -1,6 +1,6 @@
 <?php
 
-$this->registerJsFile(Yii::getAlias('@web/js/scroll.js'), ['depends' => [\yii\web\JqueryAsset::class]]);
+$this->registerJsFile(Yii::getAlias('@web/js/scroll.js?v=0'), ['depends' => [\yii\web\JqueryAsset::class]]);
 /* @var $this yii\web\View */
 
 $this->title = 'Social';
